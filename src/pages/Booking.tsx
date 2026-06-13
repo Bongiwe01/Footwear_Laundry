@@ -1,64 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Upload, Camera, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { addBooking } from "@/lib/bookingStore";
+import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const shoeTypes = ["Sneakers", "Boots", "Heels", "Loafers", "Sandals", "Other"];
 const materials = ["Suede", "Leather", "Canvas", "Mesh", "Nubuck", "Synthetic", "Mixed"];
 
 const serviceTypes = [
-  { 
-    value: "standard", 
-    label: "Standard Clean", 
-    price: "R150", 
-    desc: "Surface cleaning, midsole, & laces cleaning." 
-  },
-  { 
-    value: "deep", 
-    label: "Deep Clean", 
-    price: "R200", 
-    desc: "Standard + inner cleaning & stain removal." 
-  },
-  { 
-    value: "brightening", 
-    label: "White Sneaker Brightening", 
-    price: "R180", 
-    desc: "Special treatment to restore white sneakers to their original brightness." 
-  },
-  { 
-    value: "suede", 
-    label: "Suede/Nubuck Care", 
-    price: "R180", 
-    desc: "Gentle dry-clean and conditioning for suede and nubuck materials." 
-  },
-  { 
-    value: "kids", 
-    label: "Kids Sneaker Clean", 
-    price: "R120", 
-    desc: "Tailored cleaning for children's sneakers, gentle yet effective." 
-  },
-  { 
-    value: "deyellow", 
-    label: "De-Yellowing Treatment", 
-    price: "R180", 
-    desc: "Specialized process to remove yellowing." 
-  },
+  { value: "standard", label: "Standard Clean", price: "R150", desc: "Surface cleaning, midsole, & laces cleaning." },
+  { value: "deep", label: "Deep Clean", price: "R200", desc: "Standard + inner cleaning & stain removal." },
+  { value: "brightening", label: "White Sneaker Brightening", price: "R180", desc: "Special treatment to restore white sneakers to their original brightness." },
+  { value: "suede", label: "Suede/Nubuck Care", price: "R180", desc: "Gentle dry-clean and conditioning for suede and nubuck materials." },
+  { value: "kids", label: "Kids Sneaker Clean", price: "R120", desc: "Tailored cleaning for children's sneakers, gentle yet effective." },
+  { value: "deyellow", label: "De-Yellowing Treatment", price: "R180", desc: "Specialized process to remove yellowing." },
 ];
 
 const Booking = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [photos, setPhotos] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     customerName: "",
     whatsapp: "",
@@ -72,34 +41,49 @@ const Booking = () => {
     notes: "",
   });
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    Array.from(files).forEach((file) => {
-      if (photos.length >= 4) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        if (ev.target?.result) {
-          setPhotos((prev) => [...prev.slice(0, 3), ev.target!.result as string]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const removePhoto = (index: number) => {
-    setPhotos((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.customerName || !formData.whatsapp || !formData.email || !formData.shoeType || !formData.material || !formData.serviceType || !formData.collectionDate) {
       toast({ title: "Missing fields", description: "Please fill in all required fields.", variant: "destructive" });
       return;
     }
 
-    const booking = addBooking({ ...formData, photoUrls: photos });
-    navigate("/booking/confirmation", { state: { booking } });
+    setSubmitting(true);
+
+    const { data, error } = await supabase
+      .rpc("create_booking", {
+        _customer_name: formData.customerName,
+        _whatsapp: formData.whatsapp,
+        _email: formData.email,
+        _shoe_type: formData.shoeType,
+        _material: formData.material,
+        _service_type: formData.serviceType,
+        _collection_date: formData.collectionDate,
+        _collection_time: formData.collectionTime || "",
+        _delivery_method: formData.deliveryMethod,
+        _photo_urls: [],
+        _notes: formData.notes || "",
+      });
+
+    setSubmitting(false);
+
+    if (error || !data) {
+      toast({ title: "Submission failed", description: error?.message ?? "Something went wrong. Please try again.", variant: "destructive" });
+      return;
+    }
+
+    const selectedService = serviceTypes.find((s) => s.value === formData.serviceType);
+
+    navigate("/booking/confirmation", {
+      state: {
+        reference: data.reference,
+        serviceLabel: selectedService?.label ?? formData.serviceType,
+        shoeType: formData.shoeType,
+        collectionDate: formData.collectionDate,
+        deliveryMethod: formData.deliveryMethod,
+      },
+    });
   };
 
   const updateField = (field: string, value: string) => {
@@ -162,6 +146,10 @@ const Booking = () => {
                     </Select>
                   </div>
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="notes">Additional Notes</Label>
+                  <Textarea id="notes" placeholder="Any special instructions, scuffs to focus on, etc." value={formData.notes} onChange={(e) => updateField("notes", e.target.value)} rows={3} />
+                </div>
               </div>
 
               {/* Service Selection */}
@@ -183,8 +171,36 @@ const Booking = () => {
                 </RadioGroup>
               </div>
 
-              <Button type="submit" variant="hero" size="xl" className="w-full">
-                Submit Booking
+              {/* Collection Details */}
+              <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+                <h2 className="font-display text-2xl mb-2">Collection</h2>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="collectionDate">Preferred Date *</Label>
+                    <Input id="collectionDate" type="date" min={today} value={formData.collectionDate} onChange={(e) => updateField("collectionDate", e.target.value)} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="collectionTime">Preferred Time</Label>
+                    <Input id="collectionTime" type="time" value={formData.collectionTime} onChange={(e) => updateField("collectionTime", e.target.value)} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Collection Method</Label>
+                  <RadioGroup value={formData.deliveryMethod} onValueChange={(v) => updateField("deliveryMethod", v)} className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <RadioGroupItem value="pickup" />
+                      <span>We Pick Up</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <RadioGroupItem value="dropoff" />
+                      <span>I'll Drop Off</span>
+                    </label>
+                  </RadioGroup>
+                </div>
+              </div>
+
+              <Button type="submit" variant="hero" size="xl" className="w-full" disabled={submitting}>
+                {submitting ? "Submitting..." : "Submit Booking"}
               </Button>
             </form>
           </motion.div>

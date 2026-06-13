@@ -4,17 +4,36 @@ import { RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { getBookings, updateBookingStatus, type Booking } from "@/lib/bookingStore";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
-const statusColors: Record<Booking["status"], string> = {
+type BookingStatus = "pending" | "paid" | "in_progress" | "completed";
+
+interface Booking {
+  id: string;
+  reference: string;
+  customer_name: string;
+  whatsapp: string;
+  email: string;
+  shoe_type: string;
+  material: string;
+  service_type: string;
+  collection_date: string;
+  collection_time: string | null;
+  delivery_method: string;
+  notes: string | null;
+  status: BookingStatus;
+  created_at: string;
+}
+
+const statusColors: Record<BookingStatus, string> = {
   pending: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
   paid: "bg-blue-500/20 text-blue-400 border-blue-500/30",
   in_progress: "bg-purple-500/20 text-purple-400 border-purple-500/30",
   completed: "bg-green-500/20 text-green-400 border-green-500/30",
 };
 
-const statusLabels: Record<Booking["status"], string> = {
+const statusLabels: Record<BookingStatus, string> = {
   pending: "Pending",
   paid: "Paid",
   in_progress: "In Progress",
@@ -22,15 +41,38 @@ const statusLabels: Record<Booking["status"], string> = {
 };
 
 const AdminBookings = () => {
+  const { toast } = useToast();
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const refresh = () => setBookings(getBookings().reverse());
+  const fetchBookings = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("bookings")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  useEffect(() => { refresh(); }, []);
+    if (error) {
+      toast({ title: "Failed to load bookings", description: error.message, variant: "destructive" });
+    } else {
+      setBookings(data as Booking[]);
+    }
+    setLoading(false);
+  };
 
-  const handleStatusChange = (id: string, status: Booking["status"]) => {
-    updateBookingStatus(id, status);
-    refresh();
+  useEffect(() => { fetchBookings(); }, []);
+
+  const handleStatusChange = async (id: string, status: BookingStatus) => {
+    const { error } = await supabase
+      .from("bookings")
+      .update({ status })
+      .eq("id", id);
+
+    if (error) {
+      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+    } else {
+      setBookings((prev) => prev.map((b) => b.id === id ? { ...b, status } : b));
+    }
   };
 
   return (
@@ -44,20 +86,23 @@ const AdminBookings = () => {
                 <h1 className="font-display text-5xl md:text-6xl">BOOKINGS</h1>
                 <p className="text-muted-foreground">{bookings.length} total bookings</p>
               </div>
-              <Button variant="outline" onClick={refresh}>
-                <RefreshCw className="h-4 w-4 mr-2" /> Refresh
+              <Button variant="outline" onClick={fetchBookings} disabled={loading}>
+                <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} /> Refresh
               </Button>
             </div>
 
-            {bookings.length === 0 ? (
+            {loading ? (
+              <div className="bg-card border border-border rounded-lg p-12 text-center">
+                <p className="text-muted-foreground text-lg">Loading bookings...</p>
+              </div>
+            ) : bookings.length === 0 ? (
               <div className="bg-card border border-border rounded-lg p-12 text-center">
                 <p className="text-muted-foreground text-lg">No bookings yet.</p>
               </div>
             ) : (
               <div className="space-y-4">
-                {/* Desktop Table Header */}
-                <div className="hidden lg:grid grid-cols-[100px_1fr_1fr_120px_120px_120px_1fr] gap-4 px-4 py-2 text-sm text-muted-foreground font-semibold uppercase tracking-wider">
-                  <span>ID</span>
+                <div className="hidden lg:grid grid-cols-[120px_1fr_1fr_120px_120px_120px_1fr] gap-4 px-4 py-2 text-sm text-muted-foreground font-semibold uppercase tracking-wider">
+                  <span>Reference</span>
                   <span>Customer</span>
                   <span>Service</span>
                   <span>Date</span>
@@ -67,23 +112,22 @@ const AdminBookings = () => {
                 </div>
 
                 {bookings.map((booking) => (
-                  <div key={booking.id} className="bg-card border border-border rounded-lg p-4 lg:grid lg:grid-cols-[100px_1fr_1fr_120px_120px_120px_1fr] lg:items-center gap-4">
-                    {/* Mobile layout uses stacked; desktop uses grid */}
-                    <span className="font-mono text-sm text-muted-foreground">{booking.id}</span>
-                    
+                  <div key={booking.id} className="bg-card border border-border rounded-lg p-4 lg:grid lg:grid-cols-[120px_1fr_1fr_120px_120px_120px_1fr] lg:items-center gap-4">
+                    <span className="font-mono text-sm text-muted-foreground">{booking.reference}</span>
+
                     <div className="mt-2 lg:mt-0">
-                      <p className="font-semibold">{booking.customerName}</p>
+                      <p className="font-semibold">{booking.customer_name}</p>
                       <p className="text-sm text-muted-foreground">{booking.whatsapp}</p>
                     </div>
 
                     <div className="mt-2 lg:mt-0">
-                      <p className="capitalize">{booking.serviceType} Clean</p>
-                      <p className="text-sm text-muted-foreground">{booking.shoeType} · {booking.material}</p>
+                      <p className="capitalize">{booking.service_type}</p>
+                      <p className="text-sm text-muted-foreground">{booking.shoe_type} · {booking.material}</p>
                     </div>
 
-                    <span className="mt-2 lg:mt-0 text-sm">{booking.collectionDate}</span>
+                    <span className="mt-2 lg:mt-0 text-sm">{booking.collection_date}</span>
 
-                    <span className="mt-2 lg:mt-0 text-sm capitalize">{booking.deliveryMethod === "pickup" ? "Pickup" : "Drop-off"}</span>
+                    <span className="mt-2 lg:mt-0 text-sm capitalize">{booking.delivery_method === "pickup" ? "Pickup" : "Drop-off"}</span>
 
                     <div className="mt-2 lg:mt-0">
                       <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium border ${statusColors[booking.status]}`}>
@@ -93,19 +137,13 @@ const AdminBookings = () => {
 
                     <div className="mt-3 lg:mt-0 flex flex-wrap gap-2">
                       {booking.status !== "paid" && (
-                        <Button size="sm" variant="outline" onClick={() => handleStatusChange(booking.id, "paid")}>
-                          Mark Paid
-                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => handleStatusChange(booking.id, "paid")}>Mark Paid</Button>
                       )}
                       {booking.status !== "in_progress" && (
-                        <Button size="sm" variant="outline" onClick={() => handleStatusChange(booking.id, "in_progress")}>
-                          In Progress
-                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => handleStatusChange(booking.id, "in_progress")}>In Progress</Button>
                       )}
                       {booking.status !== "completed" && (
-                        <Button size="sm" variant="outline" onClick={() => handleStatusChange(booking.id, "completed")}>
-                          Completed
-                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => handleStatusChange(booking.id, "completed")}>Completed</Button>
                       )}
                       <Button size="sm" variant="glass" asChild>
                         <a href={`https://wa.me/${booking.whatsapp.replace(/\s/g, "").replace(/^0/, "27")}`} target="_blank" rel="noopener noreferrer">
