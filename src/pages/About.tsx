@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Target, Heart, Award, Users } from "lucide-react";
-
+import aboutImage from "@/assets/about-image.png";
 const values = [
   {
     icon: Target,
@@ -91,9 +91,8 @@ const About = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="aspect-square bg-gradient-card rounded-2xl border border-border/50 flex items-center justify-center">
-                <span className="font-display text-9xl text-primary/20">FL</span>
-              </div>
+              <div className="aspect-square rounded-2xl border border-border/50 overflow-hidden">
+               <img src={aboutImage} alt="About Sneaker" className="w-full h-full object-cover" /> </div>
               <div className="absolute -bottom-6 -right-6 bg-card rounded-xl p-6 border border-border/50">
                 <p className="font-display text-5xl text-primary">10K+</p>
                 <p className="text-muted-foreground">Sneakers Restored</p>

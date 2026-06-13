@@ -41,7 +41,7 @@ const Hero = () => {
             </h1>
 
             <p className="font-body text-xl md:text-2xl text-muted-foreground mb-4 font-light">
-              Every pair, perfection
+              EVERY PAIR, PERFECTION.
             </p>
 
             <p className="font-body text-muted-foreground max-w-md mx-auto lg:mx-0 mb-8">
