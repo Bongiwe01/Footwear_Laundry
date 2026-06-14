@@ -6,31 +6,32 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag, Star, Filter, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-import cleaningKitImg from "@/assets/products/cleaning-kit.png";
+// import cleaningKitImg from "@/assets/products/cleaning-kit.png";
 import suedeBrushImg from "@/assets/products/suede-brush.png";
 import flatLacesImg from "@/assets/products/flat-laces.png";
 import protectionSprayImg from "@/assets/products/protection-spray.png";
 import deepCleanImg from "@/assets/products/deep-clean-solution.png";
 import brushKitImg from "@/assets/products/brush-kit.png";
-import ropeLacesImg from "@/assets/products/rope-laces.png";
+// import ropeLacesImg from "@/assets/products/rope-laces.png";
 import sneakerWipesImg from "@/assets/products/sneaker-wipes.png";
 import leatherCreamImg from "@/assets/products/leather-cream.png";
-import suedekitImg from "@/assets/products/suede-kit.png";
-import leatherOilImg from "@/assets/products/leather-oil.png";
-import suedeProtectorImg from "@/assets/products/suede-protector.png";
-
+// import suedekitImg from "@/assets/products/suede-kit.png";
+// import leatherOilImg from "@/assets/products/leather-oil.png";
+// import suedeProtectorImg from "@/assets/products/suede-protector.png";
+import sneakerFoamCleanerImg from "@/assets/products/sneaker-foam-cleaner.png";
+import sneakerShampooImg from "@/assets/products/sneaker-shampoo.png";
 const categories = ["All", "Cleaning Kits", "Brushes", "Solutions", "Laces", "Leather Care", "Suede Care", "Accessories"];
 
 const products = [
   {
     id: 1,
-    name: "Premium Cleaning Kit",
-    description: "Complete kit with brush, solution & microfiber cloth",
-    price: 349,
+    name: "Sneaker Shampoo",
+    description: "Cleaning shampoo for all sneaker materials - 100ml",
+    price: 199,
     rating: 4.9,
-    reviews: 127,
-    category: "Cleaning Kits",
-    image: cleaningKitImg,
+    reviews: 156,
+    category: "Solutions",
+    image: sneakerShampooImg,
     bestseller: true,
   },
   {
@@ -57,6 +58,17 @@ const products = [
   },
   {
     id: 4,
+    name: "Foam Cleaner",
+    description: "Deep cleaning foam sneaker cleanser - 200ml",
+    price: 60,
+    rating: 4.9,
+    reviews: 127,
+    category: "Cleaning Kits",
+    image: sneakerFoamCleanerImg,
+    bestseller: true,
+  },
+  {
+    id: 5,
     name: "Protection Spray",
     description: "Water & stain repellent coating - 200ml",
     price: 199,
@@ -67,7 +79,7 @@ const products = [
     bestseller: true,
   },
   {
-    id: 5,
+    id: 6,
     name: "Deep Clean Solution",
     description: "Professional-grade cleaning solution - 250ml",
     price: 149,
@@ -78,7 +90,7 @@ const products = [
     bestseller: false,
   },
   {
-    id: 6,
+    id: 7,
     name: "Premium Brush Kit",
     description: "3-piece brush set for all materials",
     price: 179,
@@ -88,19 +100,19 @@ const products = [
     image: brushKitImg,
     bestseller: false,
   },
+  // {
+  //   id: 8,
+  //   name: "Rope Laces Pack",
+  //   description: "Thick rope laces - 3 pairs",
+  //   price: 99,
+  //   rating: 4.5,
+  //   reviews: 145,
+  //   category: "Laces",
+  //   image: ropeLacesImg,
+  //   bestseller: false,
+  // },
   {
-    id: 7,
-    name: "Rope Laces Pack",
-    description: "Thick rope laces - 3 pairs",
-    price: 99,
-    rating: 4.5,
-    reviews: 145,
-    category: "Laces",
-    image: ropeLacesImg,
-    bestseller: false,
-  },
-  {
-    id: 8,
+    id: 9,
     name: "Sneaker Wipes",
     description: "Quick clean wipes - 30 pack",
     price: 89,
@@ -111,7 +123,7 @@ const products = [
     bestseller: false,
   },
   {
-    id: 9,
+    id: 10,
     name: "Leather Care Cream",
     description: "Premium conditioner for leather sneakers",
     price: 169,
@@ -121,39 +133,39 @@ const products = [
     image: leatherCreamImg,
     bestseller: true,
   },
-  {
-    id: 10,
-    name: "Leather Oil",
-    description: "Restoration oil for worn leather - 100ml",
-    price: 189,
-    rating: 4.7,
-    reviews: 84,
-    category: "Leather Care",
-    image: leatherOilImg,
-    bestseller: false,
-  },
-  {
-    id: 11,
-    name: "Suede Care Kit",
-    description: "Complete suede cleaning & care set",
-    price: 249,
-    rating: 4.8,
-    reviews: 156,
-    category: "Suede Care",
-    image: suedekitImg,
-    bestseller: true,
-  },
-  {
-    id: 12,
-    name: "Suede Protector Spray",
-    description: "Waterproof suede & nubuck protection - 200ml",
-    price: 159,
-    rating: 4.6,
-    reviews: 98,
-    category: "Suede Care",
-    image: suedeProtectorImg,
-    bestseller: false,
-  },
+  // {
+  //   id: 11,
+  //   name: "Leather Oil",
+  //   description: "Restoration oil for worn leather - 100ml",
+  //   price: 189,
+  //   rating: 4.7,
+  //   reviews: 84,
+  //   category: "Leather Care",
+  //   image: leatherOilImg,
+  //   bestseller: false,
+  // },
+  // {
+  //   id: 12,
+  //   name: "Suede Care Kit",
+  //   description: "Complete suede cleaning & care set",
+  //   price: 249,
+  //   rating: 4.8,
+  //   reviews: 156,
+  //   category: "Suede Care",
+  //   image: suedekitImg,
+  //   bestseller: true,
+  // },
+  // {
+  //   id: 13,
+  //   name: "Suede Protector Spray",
+  //   description: "Waterproof suede & nubuck protection - 200ml",
+  //   price: 159,
+  //   rating: 4.6,
+  //   reviews: 98,
+  //   category: "Suede Care",
+  //   image: suedeProtectorImg,
+  //   bestseller: false,
+  // },
 ];
 
 const Shop = () => {
@@ -251,7 +263,7 @@ const Shop = () => {
                 <div className="relative bg-gradient-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_hsl(0_0%_0%/0.15)]">
                   {/* Bestseller Badge */}
                   {product.bestseller && (
-                    <div className="absolute top-4 left-4 z-10 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                    <div className="absolute top-4 right-4 z-10 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
                       Bestseller
                     </div>
                   )}
