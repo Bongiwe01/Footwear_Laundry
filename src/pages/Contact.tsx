@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +10,8 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 const Contact = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,13 +20,46 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mykaljbq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+        navigate("/contact/confirmation", { state: { name: formData.name, subject: formData.subject } });
+      } else {
+        toast({
+          title: "Failed to send",
+          description: "Something went wrong. Please try again or contact us on WhatsApp.",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Failed to send",
+        description: "Something went wrong. Please try again or contact us on WhatsApp.",
+        variant: "destructive",
+      });
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -229,8 +265,8 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button variant="hero" size="xl" className="w-full group">
-                    Send Message
+                  <Button type="submit" variant="hero" size="xl" className="w-full group" disabled={submitting}>
+                    {submitting ? "Sending..." : "Send Message"}
                     <Send className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </form>

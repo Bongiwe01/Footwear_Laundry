@@ -94,7 +94,7 @@ const About = () => {
               <div className="max-w-md mx-auto aspect-square rounded-2xl border border-border/50 overflow-hidden">
                 <img src={aboutImage} alt="About Sneaker" className="w-full h-full object-cover" />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-card rounded-xl p-6 border border-border/50">
+              <div className="absolute -bottom-10 left-6 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-border/50">
                 <p className="font-display text-5xl text-primary">10K+</p>
                 <p className="text-muted-foreground">Sneakers Restored</p>
               </div>

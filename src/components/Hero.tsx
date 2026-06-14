@@ -79,7 +79,7 @@ const Hero = () => {
               <img
                 src={heroSneaker}
                 alt="Premium Sneaker"
-                className="relative w-full max-w-lg animate-rotate-sneaker drop-shadow-2xl"
+                className="relative w-[700px] lg:w-[850px] animate-rotate-sneaker drop-shadow-2xl"
               />
 
               {/* Floating Stats */}
@@ -87,7 +87,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
-                className="absolute -bottom-4 left-0 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-border/50"
+                className="absolute -bottom-1 left-20 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-border/50"
               >
                 <p className="font-display text-3xl text-primary">10K+</p>
                 <p className="text-sm text-muted-foreground">Sneakers Cleaned</p>
@@ -97,7 +97,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
-                className="absolute -top-4 right-0 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-border/50"
+                className="absolute -top-1 right-6 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-border/50"
               >
                 <p className="font-display text-3xl text-primary">5★</p>
                 <p className="text-sm text-muted-foreground">Customer Rating</p>

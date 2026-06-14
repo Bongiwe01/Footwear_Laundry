@@ -14,6 +14,7 @@ import Booking from "./pages/Booking";
 import BookingConfirmation from "./pages/BookingConfirmation";
 import AdminBookings from "./pages/AdminBookings";
 import AdminLogin from "./pages/AdminLogin";
+import ContactConfirmation from "./pages/ContactConfirmation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
               <Route path="/booking" element={<Booking />} />
               <Route path="/booking/confirmation" element={<BookingConfirmation />} />
               <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/contact/confirmation" element={<ContactConfirmation />} />
               <Route path="/admin/bookings" element={<AdminRoute><AdminBookings /></AdminRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
