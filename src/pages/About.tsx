@@ -68,19 +68,26 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  It started in 2020 in a small garage in Johannesburg. Armed with 
-                  nothing but a passion for sneakers and professional-grade cleaning 
-                  supplies, we restored our first pair of beat-up Jordan 1s.
+                  It all started in 2020 in a small garage in Johannesburg.
+                  What began as a simple passion for sneakers turned into late nights experimenting with cleaning techniques, 
+                  trying to bring life back to worn-out pairs using basic tools and a lot of trial and error.
                 </p>
                 <p>
-                  Word spread quickly. Friends became customers, customers became 
-                  regulars, and before we knew it, we had cleaned over 10,000 pairs 
-                  of sneakers from across South Africa.
+                  The first pair we ever properly restored was a pair of Jordan 1s that were completely worn down.
+                  When the results came out better than expected, we posted it online, and that’s when things slowly started to shift.
                 </p>
                 <p>
-                  Today, we're proud to be the leading sneaker care service in the 
-                  country, combining our love for the culture with professional 
-                  expertise to give every sneaker the treatment it deserves.
+                  At first, it was just friends reaching out. Then friends of friends. Word spread around Johannesburg, 
+                  and soon we were spending weekends cleaning sneakers for people across different parts of the city. 
+                  Every pair taught us something new, and every customer pushed us to improve our process.
+                </p>
+                <p>
+                  Since then, we’ve steadily grown into a trusted sneaker care service 
+                  in Johannesburg, focused on quality, detail, and making every pair look and feel refreshed again..
+                </p>
+                <p>
+                  Today, we focus on giving every sneaker the attention it deserves cleaning, restoring, 
+                  and helping people extend the life of the pairs they love most.
                 </p>
               </div>
             </motion.div>
