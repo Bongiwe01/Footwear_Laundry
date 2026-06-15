@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, LogOut } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 type BookingStatus = "pending" | "paid" | "in_progress" | "completed";
 
@@ -42,6 +43,7 @@ const statusLabels: Record<BookingStatus, string> = {
 
 const AdminBookings = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -75,6 +77,11 @@ const AdminBookings = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/admin/login");
+  };
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
@@ -86,9 +93,14 @@ const AdminBookings = () => {
                 <h1 className="font-display text-5xl md:text-6xl">BOOKINGS</h1>
                 <p className="text-muted-foreground">{bookings.length} total bookings</p>
               </div>
-              <Button variant="outline" onClick={fetchBookings} disabled={loading}>
-                <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} /> Refresh
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button variant="outline" onClick={fetchBookings} disabled={loading}>
+                  <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} /> Refresh
+                </Button>
+                <Button variant="outline" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                </Button>
+              </div>
             </div>
 
             {loading ? (

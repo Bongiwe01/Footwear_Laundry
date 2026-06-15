@@ -11,12 +11,12 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-border bg-transparent hover:bg-secondary hover:text-secondary-foreground",
+        outline: "border border-border bg-transparent hover:bg-secondary hover:text-secondary-foreground hover:border-neon hover:shadow-[0_0_12px_#3B82F650]",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-secondary hover:text-secondary-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground font-semibold uppercase tracking-wider shadow-[0_0_40px_hsl(0_0%_0%/0.3)] hover:scale-105 transition-transform",
-        glass: "bg-secondary/50 backdrop-blur-sm border border-border/50 text-foreground hover:bg-secondary/70",
+        ghost: "hover:bg-secondary hover:text-secondary-foreground hover:text-neon",
+        link: "text-primary underline-offset-4 hover:underline hover:text-neon",
+        hero: "bg-primary text-primary-foreground font-semibold uppercase tracking-wider shadow-[0_0_40px_hsl(0_0%_0%/0.3)] hover:scale-105 hover:shadow-[0_0_32px_#3B82F670] transition-transform",
+        glass: "bg-secondary/50 backdrop-blur-sm border border-border/50 text-foreground hover:bg-secondary/70 hover:border-neon/50 hover:shadow-[0_0_12px_#3B82F630]",
       },
       size: {
         default: "h-10 px-4 py-2",

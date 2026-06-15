@@ -23,7 +23,7 @@ const products = [
     id: 1,
     name: "Sneaker Shampoo",
     description: "Cleaning shampoo for all sneaker materials - 100ml",
-    price: 199,
+    price: 30,
     rating: 4.9,
     reviews: 156,
     category: "Solutions",

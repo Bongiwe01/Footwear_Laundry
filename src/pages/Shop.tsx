@@ -17,7 +17,7 @@ import sneakerWipesImg from "@/assets/products/sneaker-wipes.png";
 import leatherCreamImg from "@/assets/products/leather-cream.png";
 // import suedekitImg from "@/assets/products/suede-kit.png";
 // import leatherOilImg from "@/assets/products/leather-oil.png";
-// import suedeProtectorImg from "@/assets/products/suede-protector.png";
+import suedeProtectorImg from "@/assets/products/suede-protector.png";
 import sneakerFoamCleanerImg from "@/assets/products/sneaker-foam-cleaner.png";
 import sneakerShampooImg from "@/assets/products/sneaker-shampoo.png";
 const categories = ["All", "Cleaning Kits", "Brushes", "Solutions", "Laces", "Leather Care", "Suede Care", "Accessories"];
@@ -27,7 +27,7 @@ const products = [
     id: 1,
     name: "Sneaker Shampoo",
     description: "Cleaning shampoo for all sneaker materials - 100ml",
-    price: 199,
+    price: 30,
     rating: 4.9,
     reviews: 156,
     category: "Solutions",
@@ -49,7 +49,7 @@ const products = [
     id: 3,
     name: "Premium Flat Laces",
     description: "High-quality flat laces - multiple colors",
-    price: 79,
+    price: 35,
     rating: 4.7,
     reviews: 203,
     category: "Laces",
@@ -71,7 +71,7 @@ const products = [
     id: 5,
     name: "Protection Spray",
     description: "Water & stain repellent coating - 200ml",
-    price: 199,
+    price: 150,
     rating: 4.9,
     reviews: 156,
     category: "Solutions",
@@ -155,17 +155,17 @@ const products = [
   //   image: suedekitImg,
   //   bestseller: true,
   // },
-  // {
-  //   id: 13,
-  //   name: "Suede Protector Spray",
-  //   description: "Waterproof suede & nubuck protection - 200ml",
-  //   price: 159,
-  //   rating: 4.6,
-  //   reviews: 98,
-  //   category: "Suede Care",
-  //   image: suedeProtectorImg,
-  //   bestseller: false,
-  // },
+  {
+    id: 13,
+    name: "Suede Protector Spray",
+    description: "Waterproof suede & nubuck protection - 200ml",
+    price: 159,
+    rating: 4.6,
+    reviews: 98,
+    category: "Suede Care",
+    image: suedeProtectorImg,
+    bestseller: false,
+  },
 ];
 
 const Shop = () => {

@@ -61,6 +61,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Neon blue accent
+        neon: {
+          DEFAULT: "#3B82F6",
+          dark: "#1a1ae0",
+          light: "#5555ff",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
