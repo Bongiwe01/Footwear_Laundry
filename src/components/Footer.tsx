@@ -90,10 +90,17 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-xl mb-6">Contact</h4>
             <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <MapPin className="h-5 w-5 text-primary shrink-0" />
-                <span>24 Albrecht St, Jeppestown, Johannesburg 2043</span>
-              </li>
+              <li>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=24+Albrecht+St+Jeppestown+Johannesburg+2043"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <MapPin className="h-5 w-5 text-primary shrink-0" />
+                  <span>24 Albrecht St, Jeppestown, Johannesburg 2043</span>
+                </a>
+            </li>
               <li>
                 <a 
                   href="https://wa.me/27739022082" 

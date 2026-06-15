@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Droplets, Shield, Wrench, SprayCan, Check, ArrowRight } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const services = [
 {
@@ -104,15 +104,21 @@ includes: [
 
 
 const Services = () => {
-  const { toast } = useToast();
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+const navigate = useNavigate();
+const [selectedService, setSelectedService] = useState<string | null>(null);
 
-  const handleBookNow = (serviceName: string, price: number) => {
-    toast({
-      title: "Service Selected!",
-      description: `${serviceName} - R${price} + collection fee based on your location. Full booking system coming soon!`,
-    });
-  };
+const serviceTitleToValue: Record<string, string> = {
+  "Standard Clean": "standard",
+  "Deep Clean": "deep",
+  "White Sneaker Brightening": "brightening",
+  "Suede/Nubuck Care": "suede",
+  "Kids Sneaker Clean": "kids",
+  "De-Yellowing Treatment": "deyellow",
+};
+
+const handleBookNow = (serviceTitle: string) => {
+  navigate("/booking", { state: { serviceType: serviceTitleToValue[serviceTitle] } });
+};
 
   return (
     <main className="min-h-screen bg-background">
@@ -183,9 +189,9 @@ const Services = () => {
                         variant="hero"
                         size="lg"
                         onClick={(e) => {
-                          e.stopPropagation();
-                          handleBookNow(service.title, service.price);
-                        }}
+                        e.stopPropagation();
+                        handleBookNow(service.title);
+                      }}
                       >
                         Book Now
                         <ArrowRight className="h-4 w-4" />

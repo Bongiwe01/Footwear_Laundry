@@ -3,19 +3,32 @@ import { ShoppingBag, Star, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-import cleaningKitImg from "@/assets/products/cleaning-kit.png";
+// import cleaningKitImg from "@/assets/products/cleaning-kit.png";
 import suedeBrushImg from "@/assets/products/suede-brush.png";
 import flatLacesImg from "@/assets/products/flat-laces.png";
 import protectionSprayImg from "@/assets/products/protection-spray.png";
+import sneakerFoamCleanerImg from "@/assets/products/sneaker-foam-cleaner.png";
+import sneakerShampooImg from "@/assets/products/sneaker-shampoo.png";
 
 const products = [
-  {
+  // {
+  //   id: 1,
+  //   name: "Premium Cleaning Kit",
+  //   description: "Complete kit with brush, solution & microfiber cloth",
+  //   price: 349,
+  //   rating: 4.9,
+  //   image: cleaningKitImg,
+  // },
+    {
     id: 1,
-    name: "Premium Cleaning Kit",
-    description: "Complete kit with brush, solution & microfiber cloth",
-    price: 349,
+    name: "Sneaker Shampoo",
+    description: "Cleaning shampoo for all sneaker materials - 100ml",
+    price: 199,
     rating: 4.9,
-    image: cleaningKitImg,
+    reviews: 156,
+    category: "Solutions",
+    image: sneakerShampooImg,
+    bestseller: true,
   },
   {
     id: 2,
@@ -33,14 +46,18 @@ const products = [
     rating: 4.7,
     image: flatLacesImg,
   },
-  {
+    {
     id: 4,
-    name: "Protection Spray",
-    description: "Water & stain repellent coating",
-    price: 199,
+    name: "Foam Cleaner",
+    description: "Deep cleaning foam sneaker cleanser - 200ml",
+    price: 60,
     rating: 4.9,
-    image: protectionSprayImg,
+    reviews: 127,
+    category: "Cleaning Kits",
+    image: sneakerFoamCleanerImg,
+    bestseller: true,
   },
+
 ];
 
 const ShopPreview = () => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -26,15 +26,20 @@ const serviceTypes = [
 
 const Booking = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
+
+  // Read pre-selected service passed from Services page
+  const preSelected = (location.state as any)?.serviceType ?? "";
+
   const [formData, setFormData] = useState({
     customerName: "",
     whatsapp: "",
     email: "",
     shoeType: "",
     material: "",
-    serviceType: "",
+    serviceType: preSelected,
     collectionDate: "",
     collectionTime: "",
     deliveryMethod: "pickup",

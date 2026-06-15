@@ -109,9 +109,14 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-display text-lg mb-1">Location</h3>
-                    <p className="text-muted-foreground">
-                      24 Albrecht St, Jeppestown, Johannesburg 2043
-                    </p>
+                    <a
+                    href="https://www.google.com/maps/search/?api=1&query=24+Albrecht+St+Jeppestown+Johannesburg+2043"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+                  >
+                    24 Albrecht St, Jeppestown, Johannesburg 2043
+                  </a>
                   </div>
                 </div>
 
