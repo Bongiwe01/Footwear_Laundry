@@ -79,7 +79,7 @@ const Hero = () => {
               <img
                 src={heroSneaker}
                 alt="Premium Sneaker"
-                className="relative w-[700px] lg:w-[850px] animate-rotate-sneaker drop-shadow-2xl"
+               className="relative w-[500px] lg:w-[600px] animate-rotate-sneaker drop-shadow-2xl"
               />
 
               {/* Floating Stats */}
