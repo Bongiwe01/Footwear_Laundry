@@ -68,11 +68,12 @@ const Footer = () => {
             <h4 className="font-display text-xl mb-6">Services</h4>
             <ul className="space-y-3">
               {[
+                "Standard Clean",
                 "Deep Clean",
-                "Suede Care",
-                "Leather Treatment",
-                "Sole Restoration",
-                "Sneaker Protection",
+                "White Sneaker Brightening",
+                "Suede/Nubuck Care",
+                "Kids Sneaker Clean",
+                "De-Yellowing Treatment",
               ].map((service) => (
                 <li key={service}>
                   <Link
